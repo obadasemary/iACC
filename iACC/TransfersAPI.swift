@@ -15,9 +15,13 @@ struct Transfer: Equatable {
 	let date: Date
 }
 
+protocol TransfersAPIProtocol {
+	func loadTransfers(completion: @escaping (Result<[Transfer], Error>) -> Void)
+}
+
 class TransfersAPI {
 	static var shared = TransfersAPI()
-	
+
 	/// For demo purposes, this method simulates an API request with a pre-defined response and delay.
 	func loadTransfers(completion: @escaping (Result<[Transfer], Error>) -> Void) {
 		DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -56,3 +60,5 @@ class TransfersAPI {
 		}
 	}
 }
+
+extension TransfersAPI: TransfersAPIProtocol {}

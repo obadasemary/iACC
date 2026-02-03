@@ -10,9 +10,13 @@ struct Friend: Equatable {
 	let phone: String
 }
 
+protocol FriendsAPIProtocol {
+	func loadFriends(completion: @escaping (Result<[Friend], Error>) -> Void)
+}
+
 class FriendsAPI {
 	static var shared = FriendsAPI()
-	
+
 	/// For demo purposes, this method simulates an API request with a pre-defined response and delay.
 	func loadFriends(completion: @escaping (Result<[Friend], Error>) -> Void) {
 		DispatchQueue.global().asyncAfter(deadline: .now() + 0.75) {
@@ -23,3 +27,5 @@ class FriendsAPI {
 		}
 	}
 }
+
+extension FriendsAPI: FriendsAPIProtocol {}

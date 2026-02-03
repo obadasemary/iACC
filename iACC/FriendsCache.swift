@@ -4,11 +4,16 @@
 
 import Foundation
 
-class FriendsCache {	
+protocol FriendsCacheProtocol {
+	func loadFriends(completion: @escaping (Result<[Friend], Error>) -> Void)
+	func save(_ newFriends: [Friend])
+}
+
+class FriendsCache {
 	private var friends: [Friend]?
-	
+
 	private struct NoFriendsFound: Error {}
-	
+
 	/// For demo purposes, this method simulates an database lookup with a pre-defined in-memory response and delay.
 	func loadFriends(completion: @escaping (Result<[Friend], Error>) -> Void) {
 		DispatchQueue.global().asyncAfter(deadline: .now() + 0.25) {
@@ -19,9 +24,11 @@ class FriendsCache {
 			}
 		}
 	}
-	
+
 	/// For demo purposes, this method simulates a cache with an in-memory reference to the provided friends.
 	func save(_ newFriends: [Friend]) {
 		friends = newFriends
 	}
 }
+
+extension FriendsCache: FriendsCacheProtocol {}

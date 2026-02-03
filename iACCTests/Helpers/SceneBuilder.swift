@@ -58,19 +58,19 @@ struct SceneBuilder {
 	) throws -> TestViewControllerContainer {
         AccessibilitySupport.enable
         UIView.setAnimationsEnabled(false)
-        
+
         User.shared = user
 		FriendsAPI.shared = friendsAPI
 		TransfersAPI.shared = transfersAPI
 		CardAPI.shared = cardsAPI
-		
+
 		Formatters.date.locale = locale
 		Formatters.date.timeZone = timeZone
 		Formatters.number.locale = locale
-		        
+
         let sceneDelegate = try SceneDelegate.main
         sceneDelegate.cache = friendsCache
-        
+
         let vc = TestViewControllerContainer(sceneDelegate.makeRootViewController())
         sceneDelegate.window?.rootViewController = vc
         sceneDelegate.window?.layer.speed = 100

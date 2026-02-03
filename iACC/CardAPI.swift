@@ -10,9 +10,13 @@ struct Card: Equatable {
 	let holder: String
 }
 
+protocol CardAPIProtocol {
+	func loadCards(completion: @escaping (Result<[Card], Error>) -> Void)
+}
+
 class CardAPI {
 	static var shared = CardAPI()
-	
+
 	/// For demo purposes, this method simulates an API request with a pre-defined response and delay.
 	func loadCards(completion: @escaping (Result<[Card], Error>) -> Void) {
 		DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) {
@@ -23,3 +27,5 @@ class CardAPI {
 		}
 	}
 }
+
+extension CardAPI: CardAPIProtocol {}

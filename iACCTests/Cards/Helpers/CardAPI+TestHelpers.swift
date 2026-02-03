@@ -11,31 +11,31 @@ import Foundation
 ///
 /// It simulates asynchrony by completing the request in a global queue.
 ///
-extension CardAPI {	
+extension CardAPI {
 	static func once(_ cards: [Card]) -> CardAPI {
 		results([.success(cards)])
 	}
-	
+
 	static func once(_ error: Error) -> CardAPI {
 		results([.failure(error)])
 	}
-	
+
 	static func results(_ results: [Result<[Card], Error>]) -> CardAPI {
 		var results = results
 		return resultBuilder { results.removeFirst() }
 	}
-	
+
 	static func resultBuilder(_ resultBuilder: @escaping () -> Result<[Card], Error>) -> CardAPI {
 		CardAPIStub(resultBuilder: resultBuilder)
 	}
-	
+
 	private class CardAPIStub: CardAPI {
 		private let nextResult: () -> Result<[Card], Error>
-		
+
 		init(resultBuilder: @escaping () -> Result<[Card], Error>) {
 			nextResult = resultBuilder
 		}
-		
+
 		override func loadCards(completion: @escaping (Result<[Card], Error>) -> Void) {
             let result = nextResult()
             DispatchQueue.global().async { completion(result) }

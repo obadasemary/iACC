@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/obada/Developer/iACC/.claude/skills/xcodebuildmcp/xcodebuildmcp session_show_defaults:*)",
+      "Bash(xcodebuild test:*)"
+    ]
+  }
+}
